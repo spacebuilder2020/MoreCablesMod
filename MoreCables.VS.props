@@ -1,0 +1,6 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <StationeersDirectory>E:\Steam\steamapps\common\Stationeers-Launchpad</StationeersDirectory> <!-- Change this to the path to your Stationeers directory -->
+    <SavePath>$(UserDir)\OneDrive\Documents\My Games\Stationeers-launchpad</SavePath>
+  </PropertyGroup>
+</Project>

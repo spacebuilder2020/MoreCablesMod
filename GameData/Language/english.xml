@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Language xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Name>English</Name>
+    <Code>EN</Code>
+    <Font>font_english</Font>
+    <Things>
+        <RecordThing>
+            <Key>ItemCableCoilSuperHeavy</Key>
+            <Value>Cable Coil (Super Heavy)</Value>
+            <Description>Use super heavy cable coil for power systems with extreme draws. Unlike {THING:ItemCableCoilHeavy}, which can only safely conduct 100kW, super heavy cables can transmit up to 500kW.</Description>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSH</Key>
+            <Value>Super Heavy Cable (Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSH3</Key>
+            <Value>Super Heavy Cable (3-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSH4</Key>
+            <Value>Super Heavy Cable (4-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH</Key>
+            <Value>Super Heavy Cable (3-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH4</Key>
+            <Value>Super Heavy Cable (4-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH5</Key>
+            <Value>Super Heavy Cable (5-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH6</Key>
+            <Value>Super Heavy Cable (6-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableStraightSH</Key>
+            <Value>Super Heavy Cable (Straight)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>ItemCableCoilSuperConductor</Key>
+            <Value>Cable Coil (Super Conductor)</Value>
+            <Description>Use super conductor cable for power systems with immense draws. Unlike {THING:ItemCableCoilSuperHeavy}, which can only safely conduct 500kW, super conductor cables can transmit up to 1MW.</Description>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC</Key>
+            <Value>Super Conductor Cable (Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC3</Key>
+            <Value>Super Conductor Cable (3-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC4</Key>
+            <Value>Super Conductor Cable (4-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC</Key>
+            <Value>Super Conductor Cable (3-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC4</Key>
+            <Value>Super Conductor Cable (4-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC5</Key>
+            <Value>Super Conductor Cable (5-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC6</Key>
+            <Value>Super Conductor Cable (6-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableStraightSC</Key>
+            <Value>Super Conductor Cable (Straight)</Value>
+        </RecordThing>
+    </Things>
+</Language>
