@@ -16,7 +16,7 @@ using Object = UnityEngine.Object;
 
 namespace morecables
 {
-    [StationeersMod("MoreCables","MoreCables [StationeersMods]","0.5")]
+    [StationeersMod("MoreCables","MoreCables [StationeersMods]","0.6")]
     class MoreCables : ModBehaviour
     {
         private static ConfigEntry<int> _normalVoltage;

@@ -2,21 +2,21 @@
 <GameData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <ElectronicsPrinterRecipes>
         <RecipeData>
-            <PrefabName>ItemCableCoilClone</PrefabName>
+            <PrefabName>ItemCableCoilSuperHeavy</PrefabName>
             <Recipe>
-                <Time>1</Time>
-                <Energy>100</Energy>
+                <Time>5</Time>
+                <Energy>1000</Energy>
                 <Electrum>.5</Electrum>
             </Recipe>
         </RecipeData>
         <RecipeData>
-        <PrefabName>ItemCableCoilHeavyClone</PrefabName>
-        <Recipe>
-            <Time>5</Time>
-            <Energy>500</Energy>
-            <Waspaloy>.5</Waspaloy>
-            <Inconel>.5</Inconel>
-        </Recipe>
+            <PrefabName>ItemCableCoilSuperConductor</PrefabName>
+            <Recipe>
+                <Time>10</Time>
+                <Energy>2000</Energy>
+                <Waspaloy>.5</Waspaloy>
+                <Inconel>.5</Inconel>
+            </Recipe>
         </RecipeData>
     </ElectronicsPrinterRecipes>
 </GameData>

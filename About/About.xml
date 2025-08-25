@@ -2,7 +2,7 @@
 <ModMetadata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>MoreCables</Name>
   <Author>Spacebuilder2020</Author>
-  <Version>0.5</Version>
+  <Version>0.6</Version>
   <!-- Steam description using steam styling tags for Steam workshop page -->
   <Description>[h1]MoreCables[/h1]
     [b]WARNING:[/b] This is a StationeersLaunchPad Plugin Mod. It requires Bepinex to be installed with the StationeersLaunchPad plugin.
@@ -27,9 +27,9 @@ It also allows both vanilla cables and mod cables to be configured for different
   </InGameDescription>
   <!-- All contents of ChangeLog should be changed for each publication for Steam workshop page -->
   <ChangeLog>
-    [h3]0.5:[/h3]
+    [h3]0.6:[/h3]
     [list]
-    [*] First Pass at adding better cables
+    [*] Fix Recipe
     [/list]
   </ChangeLog>
   <WorkshopHandle>3555588082</WorkshopHandle>
