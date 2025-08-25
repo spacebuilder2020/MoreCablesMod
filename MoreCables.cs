@@ -111,6 +111,7 @@ namespace morecables
                 Traverse.Create(item).Field("_slotStateDirty").SetValue(false);
                 Traverse.Create(item).Field("_staticParent").SetValue(true);
                 
+                WorldManager.Instance.SourcePrefabs.Add(item);
                 items[i] = item;
             }
 
@@ -182,11 +183,6 @@ namespace morecables
                 WorldManager.Instance.SourcePrefabs.Add(burntCable);
                 WorldManager.Instance.SourcePrefabs.Add(cable);
                 Debug.Log($"Cable( Name: {cable.name}, Prefab: {cable.PrefabName}, Voltage: {cable.MaxVoltage}, Type: {(int) cable.CableType}) added");
-            }
-
-            foreach (var item in items)
-            {
-                WorldManager.Instance.SourcePrefabs.Add(item);
             }
             
             ConsoleWindow.Print("Done");
