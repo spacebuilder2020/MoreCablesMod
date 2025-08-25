@@ -79,6 +79,38 @@
             <Description>Use super conductor cable for power systems with immense draws. Unlike {THING:ItemCableCoilSuperHeavy}, which can only safely conduct 500kW, super conductor cables can transmit up to 1MW.</Description>
         </RecordThing>
         <RecordThing>
+            <Key>StructureCableCornerSC</Key>
+            <Value>Super Conductor Cable (Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC3</Key>
+            <Value>Super Conductor Cable (3-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC4</Key>
+            <Value>Super Conductor Cable (4-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC</Key>
+            <Value>Super Conductor Cable (3-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC4</Key>
+            <Value>Super Conductor Cable (4-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC5</Key>
+            <Value>Super Conductor Cable (5-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC6</Key>
+            <Value>Super Conductor Cable (6-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableStraightSC</Key>
+            <Value>Super Conductor Cable (Straight)</Value>
+        </RecordThing>
+        <RecordThing>
             <Key>StructureCableCornerSCBurnt</Key>
             <Value>Burnt Super Conductor Cable (Corner)</Value>
         </RecordThing>
