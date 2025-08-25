@@ -105,27 +105,23 @@ namespace morecables
                 
                 var cable = Object.Instantiate(srcCable);
                 
-                var getCableName = new Func<Cable, string>((Cable c) =>
+                int cableType = (int)cable.CableType;
+                string type = "";
+                if (cable.PrefabName.Contains("Straight"))
                 {
-                    string type = "";
-                    if (c.PrefabName.Contains("Straight"))
-                    {
-                        type = "Straight";
-                    } else if (c.PrefabName.Contains("Corner"))
-                    {
-                        type = "Corner";
-                    } else if (c.PrefabName.Contains("Junction"))
-                    {
-                        type = "Junction";
-                    }
+                    type = "Straight";
+                } else if (cable.PrefabName.Contains("Corner"))
+                {
+                    type = "Corner";
+                } else if (cable.PrefabName.Contains("Junction"))
+                {
+                    type = "Junction";
+                }
 
-                    char n = c.PrefabName[c.PrefabName.Length -1];
-                    bool hasNum = n >= '0' && n <= '9';
-                    bool isHeavy = c.CableType == Cable.Type.heavy;
+                char num = cable.PrefabName[cable.PrefabName.Length -1];
                     
-                    return $"StructureCable{type}{(isHeavy ? "SC" : "SH")}{(hasNum ? n.ToString() : "")}";
-                });
-                cable.PrefabName = getCableName(cable);
+                cable.PrefabName = $"StructureCable{type}{(cableType == 1 ? "SC" : "SH")}{(num >= '0' && num <= '9' ? num.ToString() : "")}";
+                
                 cable.name = cable.PrefabName;
                 cable.PrefabHash = Animator.StringToHash(cable.PrefabName);
                 
@@ -137,14 +133,13 @@ namespace morecables
                     case Cable.Type.heavy:
                         if (superConductorVoltage.Value >= 0) cable.MaxVoltage = superConductorVoltage.Value;
                         break;
-                    
                 }
-
-                if (items[(int)cable.CableType] is null)
+                
+                if (items[cableType] is null)
                 {
                     MultiMergeConstructor item = (MultiMergeConstructor) UnityEngine.Object.Instantiate(cable.BuildStates[0].Tool.ToolEntry);
 
-                    item.PrefabName = item.PrefabName == "ItemCableCoilHeavy"
+                    item.PrefabName = cableType == 1
                         ? "ItemCableCoilSuperConductor"
                         : "ItemCableCoilSuperHeavy";
 
@@ -156,13 +151,13 @@ namespace morecables
                     Traverse.Create(item).Field("_staticParent").SetValue(true);
                 
                     WorldManager.Instance.SourcePrefabs.Add(item);
-                    items[(int)cable.CableType] = item;
+                    items[cableType] = item;
                 }
                 
-                cable.BuildStates[0].Tool.ToolEntry = items[(int)cable.CableType];
-                items[(int)cable.CableType].Constructables.Add(cable);
+                cable.BuildStates[0].Tool.ToolEntry = items[cableType];
+                items[cableType].Constructables.Add(cable);
                 
-                cable.CableType = (Cable.Type) ((int)cable.CableType + 2);
+                cable.CableType = (Cable.Type) (cableType + 2);
                 
                 
                 var burntCable = Object.Instantiate(cable.RupturedPrefab);
