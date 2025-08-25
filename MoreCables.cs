@@ -19,21 +19,21 @@ namespace morecables
     [StationeersMod("MoreCables","MoreCables [StationeersMods]","0.5")]
     class MoreCables : ModBehaviour
     {
-        public static ConfigEntry<int> normalVoltage;
-        
-        public static ConfigEntry<int> heavyVoltage;
-        
-        public static ConfigEntry<int> superHeavyVoltage;
-        
-        public static ConfigEntry<int> superConductorVoltage;
+        private static ConfigEntry<int> _normalVoltage;
+
+        private static ConfigEntry<int> _heavyVoltage;
+
+        private static ConfigEntry<int> _superHeavyVoltage;
+
+        private static ConfigEntry<int> _superConductorVoltage;
         
         public override void OnLoaded(ContentHandler contentHandler)
         {
-            normalVoltage = Config.Bind("Cables", "normalVoltage", -1, "-1 or below to leave at default");
-            heavyVoltage = Config.Bind("Cables", "heavyVoltage", -1, "-1 or below to leave at default");
+            _normalVoltage = Config.Bind("Cables", "normalVoltage", -1, "-1 or below to leave at default");
+            _heavyVoltage = Config.Bind("Cables", "heavyVoltage", -1, "-1 or below to leave at default");
             
-            superHeavyVoltage = Config.Bind("Cables", "superHeavyVoltage", 500000);
-            superConductorVoltage = Config.Bind("Cables", "superConductorVoltage", 1000000);
+            _superHeavyVoltage = Config.Bind("Cables", "superHeavyVoltage", 500000);
+            _superConductorVoltage = Config.Bind("Cables", "superConductorVoltage", 1000000);
             ConsoleWindow.Print("Patching Cables");
             Harmony harmony = new Harmony("MoreCables");
             harmony.PatchAll();
@@ -95,10 +95,10 @@ namespace morecables
                 switch (srcCable.CableType)
                 {
                     case Cable.Type.normal:
-                        if (normalVoltage.Value >= 0) srcCable.MaxVoltage = normalVoltage.Value;
+                        if (_normalVoltage.Value >= 0) srcCable.MaxVoltage = _normalVoltage.Value;
                         break;
                     case Cable.Type.heavy:
-                        if (heavyVoltage.Value >= 0) srcCable.MaxVoltage = heavyVoltage.Value;
+                        if (_heavyVoltage.Value >= 0) srcCable.MaxVoltage = _heavyVoltage.Value;
                         break;
                 }
                 Debug.Log($"Cable( Name: {srcCable.name}, Prefab: {srcCable.PrefabName}, Voltage: {srcCable.MaxVoltage}, Type: {(int) srcCable.CableType}) updated");
@@ -128,10 +128,10 @@ namespace morecables
                 switch (cable.CableType)
                 {
                     case Cable.Type.normal:
-                        if (superHeavyVoltage.Value >= 0) cable.MaxVoltage = superHeavyVoltage.Value;
+                        if (_superHeavyVoltage.Value >= 0) cable.MaxVoltage = _superHeavyVoltage.Value;
                         break;
                     case Cable.Type.heavy:
-                        if (superConductorVoltage.Value >= 0) cable.MaxVoltage = superConductorVoltage.Value;
+                        if (_superConductorVoltage.Value >= 0) cable.MaxVoltage = _superConductorVoltage.Value;
                         break;
                 }
                 
