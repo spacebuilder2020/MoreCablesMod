@@ -175,7 +175,7 @@ namespace morecables
                 
                 var burntCable = Object.Instantiate(cable.RupturedPrefab);
                 
-                burntCable.PrefabName = cable.PrefabName += "Burnt";
+                burntCable.PrefabName = cable.PrefabName + "Burnt";
                 burntCable.name = burntCable.PrefabName;
                 burntCable.PrefabHash = Animator.StringToHash(burntCable.PrefabName);
                 cable.RupturedPrefab = burntCable;
