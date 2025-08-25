@@ -87,34 +87,7 @@ namespace morecables
         {
             ConsoleWindow.Print("Updating Cable Prefabs");
             
-            var items = WorldManager.Instance.SourcePrefabs.Select(thing => thing as MultiMergeConstructor)
-                .Where(thing => thing && thing.PrefabName.StartsWith("ItemCableCoil")).ToList();
-
-            if (items.Count != 2)
-            {
-                throw new ArgumentException("Unexpected number of items found, can not continue!");
-            }
-
-            for (var i = 0; i < items.Count; i++)
-            {
-                var srcItem = items[i];
-                MultiMergeConstructor item = UnityEngine.Object.Instantiate(srcItem);
-
-                item.PrefabName = item.PrefabName.Contains("Heavy")
-                    ? "ItemCableCoilSuperConductor"
-                    : "ItemCableCoilSuperHeavy";
-
-                item.name = item.PrefabName;
-                item.PrefabHash = Animator.StringToHash(item.PrefabName);
-                item.Constructables.Clear();
-
-                Traverse.Create(item).Field("_slotStateDirty").SetValue(false);
-                Traverse.Create(item).Field("_staticParent").SetValue(true);
-                
-                WorldManager.Instance.SourcePrefabs.Add(item);
-                items[i] = item;
-            }
-
+            var items = new MultiMergeConstructor[2];
             var cables = WorldManager.Instance.SourcePrefabs.Select(thing => thing as Cable).Where(thing => thing).ToList();
             
             foreach (var srcCable in cables)
@@ -165,6 +138,25 @@ namespace morecables
                         if (superConductorVoltage.Value >= 0) cable.MaxVoltage = superConductorVoltage.Value;
                         break;
                     
+                }
+
+                if (items[(int)cable.CableType] is null)
+                {
+                    MultiMergeConstructor item = (MultiMergeConstructor) UnityEngine.Object.Instantiate(cable.BuildStates[0].Tool.ToolEntry);
+
+                    item.PrefabName = item.PrefabName == "ItemCableCoilHeavy"
+                        ? "ItemCableCoilSuperConductor"
+                        : "ItemCableCoilSuperHeavy";
+
+                    item.name = item.PrefabName;
+                    item.PrefabHash = Animator.StringToHash(item.PrefabName);
+                    item.Constructables.Clear();
+
+                    Traverse.Create(item).Field("_slotStateDirty").SetValue(false);
+                    Traverse.Create(item).Field("_staticParent").SetValue(true);
+                
+                    WorldManager.Instance.SourcePrefabs.Add(item);
+                    items[(int)cable.CableType] = item;
                 }
                 
                 cable.BuildStates[0].Tool.ToolEntry = items[(int)cable.CableType];
