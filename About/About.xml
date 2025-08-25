@@ -9,7 +9,10 @@
     See: https://github.com/StationeersLaunchPad/StationeersLaunchPad
 
     This mod adds two new cables to the base game, (super heavy and super conductor).
+    Default for new cables is 500kW and 1MW.
     It also allows both vanilla cables and mod cables to be configured for different voltages than default.
+    
+    Source Code: https://github.com/spacebuilder2020/MoreCablesMod
   </Description>
   <!-- Ingame Description using TMP tags for Workshop menu -->
   <InGameDescription>
@@ -17,7 +20,8 @@
 <b>WARNING:</b> <color=#ff0000>This is a StationeersLaunchPad Plugin Mod. It requires Bepinex to be installed with the StationeersLaunchPad plugin.</color>
 See: https://github.com/StationeersLaunchPad/StationeersLaunchPad
 
-This mod adds two new cables to the base game, (super heavy and super conductor).  
+This mod adds two new cables to the base game, (super heavy and super conductor).
+Default for new cables is 500kW and 1MW.  
 It also allows both vanilla cables and mod cables to be configured for different voltages than default.
 ]]>
   </InGameDescription>
