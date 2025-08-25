@@ -28,6 +28,7 @@ It also allows both vanilla cables and mod cables to be configured for different
     [*] First Pass at adding better cables
     [/list]
   </ChangeLog>
+  <WorkshopHandle>3555588082</WorkshopHandle>
   <!-- StationeersMods and BepInEx tags for Steam workshop page will be automatically added by the framework when publishing -->
   <Tags>
     <Tag>Mod</Tag>
