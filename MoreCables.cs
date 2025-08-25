@@ -94,23 +94,26 @@ namespace morecables
             {
                 throw new ArgumentException("Unexpected number of items found, can not continue!");
             }
-            
-            foreach (var srcItem in items)
+
+            for (var i = 0; i < items.Count; i++)
             {
+                var srcItem = items[i];
                 MultiMergeConstructor item = UnityEngine.Object.Instantiate(srcItem);
 
-                item.PrefabName = item.PrefabName.Contains("Heavy") ? "ItemCableCoilSuperConductor" : "ItemCableCoilSuperHeavy";
-                
+                item.PrefabName = item.PrefabName.Contains("Heavy")
+                    ? "ItemCableCoilSuperConductor"
+                    : "ItemCableCoilSuperHeavy";
+
                 item.name = item.PrefabName;
                 item.PrefabHash = Animator.StringToHash(item.PrefabName);
                 item.Constructables.Clear();
-                
+
                 Traverse.Create(item).Field("_slotStateDirty").SetValue(false);
                 Traverse.Create(item).Field("_staticParent").SetValue(true);
                 
-                WorldManager.Instance.SourcePrefabs.Add(item);
+                items[i] = item;
             }
-            
+
             var cables = WorldManager.Instance.SourcePrefabs.Select(thing => thing as Cable).Where(thing => thing).ToList();
             
             foreach (var srcCable in cables)
@@ -179,6 +182,11 @@ namespace morecables
                 WorldManager.Instance.SourcePrefabs.Add(burntCable);
                 WorldManager.Instance.SourcePrefabs.Add(cable);
                 Debug.Log($"Cable( Name: {cable.name}, Prefab: {cable.PrefabName}, Voltage: {cable.MaxVoltage}, Type: {(int) cable.CableType}) added");
+            }
+
+            foreach (var item in items)
+            {
+                WorldManager.Instance.SourcePrefabs.Add(item);
             }
             
             ConsoleWindow.Print("Done");
