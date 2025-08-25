@@ -88,17 +88,16 @@ namespace morecables
             ConsoleWindow.Print("Updating Cable Prefabs");
             
             var items = WorldManager.Instance.SourcePrefabs.Select(thing => thing as MultiMergeConstructor)
-                .Where(thing => thing && thing.PrefabName.StartsWith("ItemCable")).ToList();
+                .Where(thing => thing && thing.PrefabName.StartsWith("ItemCableCoil")).ToList();
 
             if (items.Count != 2)
             {
                 throw new ArgumentException("Unexpected number of items found, can not continue!");
             }
             
-            for (int i =0; i < items.Count; i++)
+            foreach (var srcItem in items)
             {
-                
-                MultiMergeConstructor item = (MultiMergeConstructor) UnityEngine.Object.Instantiate(items[i]);
+                MultiMergeConstructor item = UnityEngine.Object.Instantiate(srcItem);
 
                 item.PrefabName = item.PrefabName.Contains("Heavy") ? "ItemCableCoilSuperConductor" : "ItemCableCoilSuperHeavy";
                 
@@ -110,8 +109,6 @@ namespace morecables
                 Traverse.Create(item).Field("_staticParent").SetValue(true);
                 
                 WorldManager.Instance.SourcePrefabs.Add(item);
-                
-                items[i] = item;
             }
             
             var cables = WorldManager.Instance.SourcePrefabs.Select(thing => thing as Cable).Where(thing => thing).ToList();
@@ -121,10 +118,10 @@ namespace morecables
                 switch (srcCable.CableType)
                 {
                     case Cable.Type.normal:
-                        if (MoreCables.normalVoltage.Value >= 0) srcCable.MaxVoltage = MoreCables.normalVoltage.Value;
+                        if (normalVoltage.Value >= 0) srcCable.MaxVoltage = normalVoltage.Value;
                         break;
                     case Cable.Type.heavy:
-                        if (MoreCables.heavyVoltage.Value >= 0) srcCable.MaxVoltage = MoreCables.heavyVoltage.Value;
+                        if (heavyVoltage.Value >= 0) srcCable.MaxVoltage = heavyVoltage.Value;
                         break;
                 }
                 Debug.Log($"Cable( Name: {srcCable.name}, Prefab: {srcCable.PrefabName}, Voltage: {srcCable.MaxVoltage}, Type: {(int) srcCable.CableType}) updated");
@@ -158,10 +155,10 @@ namespace morecables
                 switch (cable.CableType)
                 {
                     case Cable.Type.normal:
-                        if (MoreCables.superHeavyVoltage.Value >= 0) cable.MaxVoltage = MoreCables.superHeavyVoltage.Value;
+                        if (superHeavyVoltage.Value >= 0) cable.MaxVoltage = superHeavyVoltage.Value;
                         break;
                     case Cable.Type.heavy:
-                        if (MoreCables.superConductorVoltage.Value >= 0) cable.MaxVoltage = MoreCables.superConductorVoltage.Value;
+                        if (superConductorVoltage.Value >= 0) cable.MaxVoltage = superConductorVoltage.Value;
                         break;
                     
                 }

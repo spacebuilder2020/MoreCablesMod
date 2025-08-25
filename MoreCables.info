@@ -1,8 +1,8 @@
 {
-    "_name": "ExamplePatchMod",
-    "_author": "Example",
-    "_description": "ExamplePatchMod",
-    "_version": "1",
+    "_name": "MoreCables",
+    "_author": "Spacebuilder2020",
+    "_description": "MoreCables",
+    "_version": "0.5",
     "_unityVersion": "2022.3.7f1",
     "_platforms": 1,
     "_content": 4,
