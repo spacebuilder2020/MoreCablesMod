@@ -108,26 +108,29 @@ namespace morecables
                 
                 Traverse.Create(item).Field("_slotStateDirty").SetValue(false);
                 Traverse.Create(item).Field("_staticParent").SetValue(true);
+                
+                WorldManager.Instance.SourcePrefabs.Add(item);
+                
                 items[i] = item;
             }
             
             var cables = WorldManager.Instance.SourcePrefabs.Select(thing => thing as Cable).Where(thing => thing).ToList();
             
-            for(int i =0; i < cables.Count; i++)
+            foreach (var srcCable in cables)
             {
-                switch (cables[i].CableType)
+                switch (srcCable.CableType)
                 {
                     case Cable.Type.normal:
-                        if (MoreCables.normalVoltage.Value >= 0) cables[i].MaxVoltage = MoreCables.normalVoltage.Value;
+                        if (MoreCables.normalVoltage.Value >= 0) srcCable.MaxVoltage = MoreCables.normalVoltage.Value;
                         break;
                     case Cable.Type.heavy:
-                        if (MoreCables.heavyVoltage.Value >= 0) cables[i].MaxVoltage = MoreCables.heavyVoltage.Value;
+                        if (MoreCables.heavyVoltage.Value >= 0) srcCable.MaxVoltage = MoreCables.heavyVoltage.Value;
                         break;
                 }
-                Debug.Log($"Cable( Name: {cables[i].name}, Prefab: {cables[i].PrefabName}, Voltage: {cables[i].MaxVoltage}, Type: {(int) cables[i].CableType}) updated");
+                Debug.Log($"Cable( Name: {srcCable.name}, Prefab: {srcCable.PrefabName}, Voltage: {srcCable.MaxVoltage}, Type: {(int) srcCable.CableType}) updated");
                 
-                var cable = Object.Instantiate(cables[i]);
-
+                var cable = Object.Instantiate(srcCable);
+                
                 var getCableName = new Func<Cable, string>((Cable c) =>
                 {
                     string type = "";
@@ -148,10 +151,10 @@ namespace morecables
                     
                     return $"StructureCable{type}{(isHeavy ? "SC" : "SH")}{(hasNum ? n.ToString() : "")}";
                 });
-                
                 cable.PrefabName = getCableName(cable);
                 cable.name = cable.PrefabName;
                 cable.PrefabHash = Animator.StringToHash(cable.PrefabName);
+                
                 switch (cable.CableType)
                 {
                     case Cable.Type.normal:
@@ -168,19 +171,19 @@ namespace morecables
                 
                 cable.CableType = (Cable.Type) ((int)cable.CableType + 2);
                 
-                cables[i] = cable;
+                
+                var burntCable = Object.Instantiate(cable.RupturedPrefab);
+                
+                burntCable.PrefabName = cable.PrefabName += "Burnt";
+                burntCable.name = burntCable.PrefabName;
+                burntCable.PrefabHash = Animator.StringToHash(burntCable.PrefabName);
+                cable.RupturedPrefab = burntCable;
+                
+                WorldManager.Instance.SourcePrefabs.Add(burntCable);
+                WorldManager.Instance.SourcePrefabs.Add(cable);
                 Debug.Log($"Cable( Name: {cable.name}, Prefab: {cable.PrefabName}, Voltage: {cable.MaxVoltage}, Type: {(int) cable.CableType}) added");
             }
-
-            foreach (var item in items)
-            {
-                WorldManager.Instance.SourcePrefabs.Add(item);
-            }
-
-            foreach (var cable in cables)
-            {
-                WorldManager.Instance.SourcePrefabs.Add(cable);
-            }
+            
             ConsoleWindow.Print("Done");
             return true;
         }

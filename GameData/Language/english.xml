@@ -42,41 +42,101 @@
             <Value>Super Heavy Cable (Straight)</Value>
         </RecordThing>
         <RecordThing>
+            <Key>StructureCableCornerSHBurnt</Key>
+            <Value>Burnt Super Heavy Cable (Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSH3Burnt</Key>
+            <Value>Burnt Super Heavy Cable (3-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSH4Burnt</Key>
+            <Value>Burnt Super Heavy Cable (4-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSHBurnt</Key>
+            <Value>Burnt Super Heavy Cable (3-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH4Burnt</Key>
+            <Value>Burnt Super Heavy Cable (4-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH5Burnt</Key>
+            <Value>Burnt Super Heavy Cable (5-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSH6Burnt</Key>
+            <Value>Burnt Super Heavy Cable (6-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableStraightSHBurnt</Key>
+            <Value>Burnt Super Heavy Cable (Straight)</Value>
+        </RecordThing>
+        <RecordThing>
             <Key>ItemCableCoilSuperConductor</Key>
             <Value>Cable Coil (Super Conductor)</Value>
             <Description>Use super conductor cable for power systems with immense draws. Unlike {THING:ItemCableCoilSuperHeavy}, which can only safely conduct 500kW, super conductor cables can transmit up to 1MW.</Description>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableCornerSC</Key>
-            <Value>Super Conductor Cable (Corner)</Value>
+            <Key>StructureCableCornerSCBurnt</Key>
+            <Value>Burnt Super Conductor Cable (Corner)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableCornerSC3</Key>
-            <Value>Super Conductor Cable (3-Way Corner)</Value>
+            <Key>StructureCableCornerSC3Burnt</Key>
+            <Value>Burnt Super Conductor Cable (3-Way Corner)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableCornerSC4</Key>
-            <Value>Super Conductor Cable (4-Way Corner)</Value>
+            <Key>StructureCableCornerSC4Burnt</Key>
+            <Value>Burnt Super Conductor Cable (4-Way Corner)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableJunctionSC</Key>
-            <Value>Super Conductor Cable (3-Way Junction)</Value>
+            <Key>StructureCableJunctionSCBurnt</Key>
+            <Value>Burnt Super Conductor Cable (3-Way Junction)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableJunctionSC4</Key>
-            <Value>Super Conductor Cable (4-Way Junction)</Value>
+            <Key>StructureCableJunctionSC4Burnt</Key>
+            <Value>Burnt Super Conductor Cable (4-Way Junction)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableJunctionSC5</Key>
-            <Value>Super Conductor Cable (5-Way Junction)</Value>
+            <Key>StructureCableJunctionSC5Burnt</Key>
+            <Value>Burnt Super Conductor Cable (5-Way Junction)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableJunctionSC6</Key>
-            <Value>Super Conductor Cable (6-Way Junction)</Value>
+            <Key>StructureCableJunctionSC6Burnt</Key>
+            <Value>Burnt Super Conductor Cable (6-Way Junction)</Value>
         </RecordThing>
         <RecordThing>
-            <Key>StructureCableStraightSC</Key>
-            <Value>Super Conductor Cable (Straight)</Value>
+            <Key>StructureCableCornerSCBurnt</Key>
+            <Value>Burnt Super Conductor Cable (Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC3Burnt</Key>
+            <Value>Burnt Super Conductor Cable (3-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableCornerSC4Burnt</Key>
+            <Value>Burnt Super Conductor Cable (4-Way Corner)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSCBurnt</Key>
+            <Value>Burnt Super Conductor Cable (3-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC4Burnt</Key>
+            <Value>Burnt Super Conductor Cable (4-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC5Burnt</Key>
+            <Value>Burnt Super Conductor Cable (5-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableJunctionSC6Burnt</Key>
+            <Value>Burnt Super Conductor Cable (6-Way Junction)</Value>
+        </RecordThing>
+        <RecordThing>
+            <Key>StructureCableStraightSCBurnt</Key>
+            <Value>Burnt Super Conductor Cable (Straight)</Value>
         </RecordThing>
     </Things>
 </Language>
