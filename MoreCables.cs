@@ -14,7 +14,7 @@ using Object = UnityEngine.Object;
 
 namespace morecables
 {
-    [StationeersMod("MoreCables","MoreCables [StationeersMods]","0.6")]
+    [StationeersMod("MoreCables","MoreCables [StationeersMods]","0.7")]
     class MoreCables : ModBehaviour
     {
         private static ConfigEntry<int> _normalVoltage;
@@ -158,6 +158,7 @@ namespace morecables
                     cable.PrefabName = $"StructureCable{type}{(cableType == 1 ? "SC" : "SH")}{(num >= '0' && num <= '9' ? num.ToString() : "")}";
                     
                     cable.name = cable.PrefabName;
+                    cable.Renderers.Clear();
                     cable.PrefabHash = Animator.StringToHash(cable.PrefabName);
                     
                     switch (cable.CableType)
@@ -180,6 +181,7 @@ namespace morecables
                             : "ItemCableCoilSuperHeavy";
 
                         item.name = item.PrefabName;
+                        item.Renderers.Clear();
                         item.PrefabHash = Animator.StringToHash(item.PrefabName);
                         item.Constructables.Clear();
 
@@ -200,6 +202,7 @@ namespace morecables
                     copies.Add(burntCable.gameObject);
                     burntCable.PrefabName = cable.PrefabName + "Burnt";
                     burntCable.name = burntCable.PrefabName;
+                    burntCable.Renderers.Clear();
                     burntCable.PrefabHash = Animator.StringToHash(burntCable.PrefabName);
                     cable.RupturedPrefab = burntCable;
                     
