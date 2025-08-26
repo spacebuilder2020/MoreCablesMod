@@ -27,9 +27,11 @@ It also allows both vanilla cables and mod cables to be configured for different
   </InGameDescription>
   <!-- All contents of ChangeLog should be changed for each publication for Steam workshop page -->
   <ChangeLog>
-    [h3]0.6:[/h3]
+    [h3]0.7:[/h3]
     [list]
-    [*] Fix Recipe
+    [*] Fix Errors when painting
+    [*] Fix Ghost cables being added to main menu and new world
+    [*] Add the ability to disable Super Conductor or Super Heavy cable prefabs
     [/list]
   </ChangeLog>
   <WorkshopHandle>3555588082</WorkshopHandle>

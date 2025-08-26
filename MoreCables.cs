@@ -21,7 +21,8 @@ namespace morecables
 
         private static ConfigEntry<int> _heavyVoltage;
 
-        private static ConfigEntry<bool> _createNewCables;
+        private static ConfigEntry<bool> _shEnabled;
+        private static ConfigEntry<bool> _scEnabled;
         
         private static ConfigEntry<int> _superHeavyVoltage;
 
@@ -31,7 +32,9 @@ namespace morecables
         {
             _normalVoltage = Config.Bind("Cables", "normalVoltage", -1, "-1 or below to leave at default");
             _heavyVoltage = Config.Bind("Cables", "heavyVoltage", -1, "-1 or below to leave at default");
-            _createNewCables = Config.Bind("Cables", "createNewCables", true, "Create Super Heavy and Super Conductor cables");
+            _shEnabled = Config.Bind("Cables", "superHeavyEnabled", true, "Create Super Heavy and Super Conductor cables");
+            _scEnabled = Config.Bind("Cables", "superConductorEnabled", true, "Create Super Heavy and Super Conductor cables");
+            
             _superHeavyVoltage = Config.Bind("Cables", "superHeavyVoltage", 500000, "Voltage for Super Heavy");
             _superConductorVoltage = Config.Bind("Cables", "superConductorVoltage", 1000000, "Voltage for Super Conductor");
             ConsoleWindow.Print("Patching Cables");
@@ -101,9 +104,13 @@ namespace morecables
                 var items = new MultiMergeConstructor[2];
                 var cables = WorldManager.Instance.SourcePrefabs.Select(thing => thing as Cable).Where(thing => thing).ToList();
 
-                if (!_createNewCables.Value)
+                if (!_shEnabled.Value)
                 {
-                    ConsoleWindow.PrintAction("Warning: Extra cables are disabled and will be removed from worlds if loaded!");
+                    ConsoleWindow.PrintAction("Warning: Super Heavy Cables are disabled and will be removed from worlds if loaded!");
+                }
+                if (!_scEnabled.Value)
+                {
+                    ConsoleWindow.PrintAction("Warning: Super Conductor Cables are disabled and will be removed from worlds if loaded!");
                 }
 
                 foreach (var srcCable in cables)
@@ -119,7 +126,8 @@ namespace morecables
                     }
                     Debug.Log($"Cable( Name: {srcCable.name}, Prefab: {srcCable.PrefabName}, Voltage: {srcCable.MaxVoltage}, Type: {(int) srcCable.CableType}) updated");
                     
-                    if (!_createNewCables.Value) continue;
+                    if (!_shEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
+                    if (!_scEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
                     
                     var cable = Object.Instantiate(srcCable);
                     copies.Add(cable.gameObject);
