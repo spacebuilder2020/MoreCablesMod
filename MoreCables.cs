@@ -30,12 +30,11 @@ namespace morecables
         
         public override void OnLoaded(ContentHandler contentHandler)
         {
-            _normalVoltage = Config.Bind("Cables", "normalVoltage", -1, "-1 or below to leave at default");
-            _heavyVoltage = Config.Bind("Cables", "heavyVoltage", -1, "-1 or below to leave at default");
-            _shEnabled = Config.Bind("Cables", "superHeavyEnabled", true, "Create Super Heavy and Super Conductor cables");
-            _scEnabled = Config.Bind("Cables", "superConductorEnabled", true, "Create Super Heavy and Super Conductor cables");
-            
+            _normalVoltage = Config.Bind("Cables", "normalVoltage", -1, "Voltage for Normal Cables, -1 or below to leave at default");
+            _heavyVoltage = Config.Bind("Cables", "heavyVoltage", -1, "Voltage for Heavy Cables, -1 or below to leave at default");
+            _shEnabled = Config.Bind("Cables", "superHeavyEnabled", true, "Enable Super Heavy Cables");
             _superHeavyVoltage = Config.Bind("Cables", "superHeavyVoltage", 500000, "Voltage for Super Heavy");
+            _scEnabled = Config.Bind("Cables", "superConductorEnabled", true, "Enable Super Conductor Cables");
             _superConductorVoltage = Config.Bind("Cables", "superConductorVoltage", 1000000, "Voltage for Super Conductor");
             ConsoleWindow.Print("Patching Cables");
             Harmony harmony = new Harmony("MoreCables");
