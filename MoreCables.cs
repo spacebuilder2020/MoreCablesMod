@@ -127,7 +127,7 @@ namespace morecables
                     Debug.Log($"Cable( Name: {srcCable.name}, Prefab: {srcCable.PrefabName}, Voltage: {srcCable.MaxVoltage}, Type: {(int) srcCable.CableType}) updated");
                     
                     if (!_shEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
-                    if (!_scEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
+                    if (!_scEnabled.Value && srcCable.CableType is Cable.Type.heavy) continue;
                     
                     var cable = Object.Instantiate(srcCable);
                     copies.Add(cable.gameObject);
