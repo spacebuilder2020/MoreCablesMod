@@ -88,32 +88,6 @@ namespace morecables
                     field.SetValue(copy, field.GetValue(original));
                 }
             }
-
-            private static T CopyObject<T>(T originalBehaviour) where T : MonoBehaviour
-            {
-                return (T) CopyObject(originalBehaviour.gameObject).GetComponent(originalBehaviour.GetType());
-            }
-            private static GameObject CopyObject(GameObject gameObject)
-            {
-                var original = gameObject.gameObject;
-                var copy = new GameObject();
-                Copy(original, copy);
-
-                foreach (var component in original.GetComponents<Object>())
-                {
-                    if (component is Transform) continue;
-                    var copy2 = copy.AddComponent(component.GetType());
-                    Copy(component, copy2);
-                }
-
-                for (int i = 0; i < original.transform.childCount; i++)
-                {
-                    var copy2 = CopyObject(original.transform.GetChild(i).gameObject);
-                    copy2.transform.parent = copy.transform;
-                }
-                
-                return copy;
-            }
             
             private static List<GameObject> copies = new List<GameObject>();
                 
