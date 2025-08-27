@@ -9,6 +9,10 @@
     See: https://github.com/StationeersLaunchPad/StationeersLaunchPad
 
     This mod adds two new cables to the base game, (super heavy and super conductor).
+    This is a first pass of the concept, so the cables currently reuse the prefabs and models of the base game cables.
+    Future plans include a rework of the cable models to add distinct cables for the new types.
+    (this may also include bumping up the default voltages of the cables as needed)
+    
     Default for new cables is 500kW and 1MW.
     It also allows both vanilla cables and mod cables to be configured for different voltages than default.
     
