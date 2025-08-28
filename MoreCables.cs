@@ -83,17 +83,42 @@ namespace morecables
                 
                 return codes.AsEnumerable();
             }
-
-            private static void Copy<T>(T original, T copy)
-            {
-                var type = original.GetType();
-                foreach (var field in type.GetFields())
-                {
-                    field.SetValue(copy, field.GetValue(original));
-                }
-            }
             
             private static List<GameObject> copies = new List<GameObject>();
+            private static T CopyPrefab<T>(T srcPrefab, string prefabName, MultiConstructor toolItem) where T : Thing
+            {
+                var prefab = Object.Instantiate(srcPrefab);
+                copies.Add(prefab.gameObject);
+
+                prefab.PrefabName = prefabName;
+                prefab.name = prefab.PrefabName; //The name needs to be reset and due to how saving and tooltips work, this must match the prefab name.
+
+                prefab.Renderers.Clear();  //Due to how dynamic loading works, objects will become awake so you need to clear the attached renderers.  Warning, do not delete them or that will break the game!
+
+                prefab.PrefabHash = Animator.StringToHash(prefab.PrefabName); //Once the PrefabName has been defined, a new hash must be generated.
+
+                if (prefab is DynamicThing)  //If your base prefab is a dynamic thing, you need to turn physics back off since by default when an object is created, it is woken up but for our usecase, we need a sleeping item.
+                {
+                    Traverse.Create(prefab).Field("_slotStateDirty").SetValue(false);
+                    Traverse.Create(prefab).Field("_staticParent").SetValue(true);
+                }
+
+                if (prefab is MultiConstructor item)
+                {
+                    item.Constructables.Clear(); //Clear existing Constructables, we will register new Constructables when each of the structures are loaded.
+                }
+
+                if (prefab is Structure structure && toolItem)
+                {
+                    structure.BuildStates[0].Tool.ToolEntry = toolItem; //If a prefab is a structure, a copy must be taken of the tool item for creating a new item varient of the structure.
+                    toolItem.Constructables.Add(structure); //For a lot of structures, there is one item that is shared between all    
+                }
+
+                WorldManager.Instance.SourcePrefabs.Add(prefab); //Once our new prefab is loaded we need to add it to the list.
+                copies.Add(prefab.gameObject); //We also need to save the gameobject so we can inactivate it later.
+
+                return prefab;
+            }
                 
             [HarmonyPatch(typeof(Prefab), "LoadAll"), HarmonyPrefix]
             private static bool Prefab_Load_All_Prefix()
@@ -128,28 +153,29 @@ namespace morecables
                     if (!_shEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
                     if (!_scEnabled.Value && srcCable.CableType is Cable.Type.heavy) continue;
                     
-                    var cable = Object.Instantiate(srcCable);
-                    copies.Add(cable.gameObject);
-                    int cableType = (int)cable.CableType;
+                    int cableType = (int)srcCable.CableType;
                     string type = "";
-                    if (cable.PrefabName.Contains("Straight"))
+                    if (srcCable.PrefabName.Contains("Straight"))
                     {
                         type = "Straight";
-                    } else if (cable.PrefabName.Contains("Corner"))
+                    } else if (srcCable.PrefabName.Contains("Corner"))
                     {
                         type = "Corner";
-                    } else if (cable.PrefabName.Contains("Junction"))
+                    } else if (srcCable.PrefabName.Contains("Junction"))
                     {
                         type = "Junction";
                     }
 
-                    char num = cable.PrefabName[cable.PrefabName.Length -1];
-                        
-                    cable.PrefabName = $"StructureCable{type}{(cableType == 1 ? "SC" : "SH")}{(num >= '0' && num <= '9' ? num.ToString() : "")}";
+                    char num = srcCable.PrefabName[srcCable.PrefabName.Length -1];
                     
-                    cable.name = cable.PrefabName;
-                    cable.Renderers.Clear();
-                    cable.PrefabHash = Animator.StringToHash(cable.PrefabName);
+                    if (items[cableType] is null)
+                    {
+                        items[cableType] = (MultiMergeConstructor) CopyPrefab(srcCable.BuildStates[0].Tool.ToolEntry, cableType == 1
+                            ? "ItemCableCoilSuperConductor"
+                            : "ItemCableCoilSuperHeavy", null);
+                    }
+                    
+                    var cable = CopyPrefab(srcCable,$"StructureCable{type}{(cableType == 1 ? "SC" : "SH")}{(num >= '0' && num <= '9' ? num.ToString() : "")}", items[cableType]);
                     
                     switch (cable.CableType)
                     {
@@ -161,43 +187,10 @@ namespace morecables
                             break;
                     }
                     
-                    if (items[cableType] is null)
-                    {
-                        Debug.Log($"Creating Item");
-                        MultiMergeConstructor item = (MultiMergeConstructor) UnityEngine.Object.Instantiate(cable.BuildStates[0].Tool.ToolEntry);
-                        copies.Add(item.gameObject);
-                        item.PrefabName = cableType == 1
-                            ? "ItemCableCoilSuperConductor"
-                            : "ItemCableCoilSuperHeavy";
-
-                        item.name = item.PrefabName;
-                        item.Renderers.Clear();
-                        item.PrefabHash = Animator.StringToHash(item.PrefabName);
-                        item.Constructables.Clear();
-
-                        Traverse.Create(item).Field("_slotStateDirty").SetValue(false);
-                        Traverse.Create(item).Field("_staticParent").SetValue(true);
-                    
-                        WorldManager.Instance.SourcePrefabs.Add(item);
-                        items[cableType] = item;
-                    }
-                    
-                    cable.BuildStates[0].Tool.ToolEntry = items[cableType];
-                    items[cableType].Constructables.Add(cable);
-                    
                     cable.CableType = (Cable.Type) (cableType + 2);
                     
-                    Debug.Log($"Creating Ruptured");
-                    var burntCable = Object.Instantiate(cable.RupturedPrefab);
-                    copies.Add(burntCable.gameObject);
-                    burntCable.PrefabName = cable.PrefabName + "Burnt";
-                    burntCable.name = burntCable.PrefabName;
-                    burntCable.Renderers.Clear();
-                    burntCable.PrefabHash = Animator.StringToHash(burntCable.PrefabName);
-                    cable.RupturedPrefab = burntCable;
+                    cable.RupturedPrefab = CopyPrefab(cable.RupturedPrefab, cable.PrefabName + "Burnt", null);
                     
-                    WorldManager.Instance.SourcePrefabs.Add(burntCable);
-                    WorldManager.Instance.SourcePrefabs.Add(cable);
                     Debug.Log($"Cable( Name: {cable.name}, Prefab: {cable.PrefabName}, Voltage: {cable.MaxVoltage}, Type: {(int) cable.CableType}) added");
                 }
 
