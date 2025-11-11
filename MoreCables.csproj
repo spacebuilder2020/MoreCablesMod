@@ -60,6 +60,10 @@
             <HintPath>$(StationeersDirectory)\BepInEx\plugins\StationeersLaunchPad\StationeersMods.Interface.dll</HintPath>
             <Private>False</Private>
         </Reference>
+        <Reference Include="LaunchPadBooster">
+            <HintPath>$(StationeersDirectory)\BepInEx\plugins\StationeersLaunchPad\LaunchPadBooster.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <ItemGroup>

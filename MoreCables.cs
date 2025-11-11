@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
 using Assets.Scripts;
@@ -7,8 +9,10 @@ using Assets.Scripts.Objects.Electrical;
 using Assets.Scripts.Util;
 using BepInEx.Configuration;
 using HarmonyLib;
+using LaunchPadBooster.Patching;
 using StationeersMods.Interface;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Label = System.Reflection.Emit.Label;
 using Object = UnityEngine.Object;
 
@@ -38,7 +42,8 @@ namespace morecables
             _superConductorVoltage = Config.Bind("Cables", "superConductorVoltage", 1000000, "Voltage for Super Conductor");
             ConsoleWindow.Print("Patching Cables");
             Harmony harmony = new Harmony("MoreCables");
-            harmony.PatchAll();
+            Debug.Log(new StackTrace().GetFrame(0).GetMethod().ReflectedType.Assembly.FullName);
+            harmony.ConditionalPatchAll();
             ConsoleWindow.Print("MoreCables Loaded!");
         }
 
@@ -46,7 +51,8 @@ namespace morecables
         public class Patches
         {
             [HarmonyPatch(typeof(Cable), nameof(Cable.OnImGuiDraw)), HarmonyTranspiler]
-            private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6003.26330 ")]
+            private static IEnumerable<CodeInstruction> Cable_OnImGuiDraw_Transpiler(IEnumerable<CodeInstruction> instructions)
             {
                 List<CodeInstruction> codes = new List<CodeInstruction>();
                 Label brFalse = new Label();
@@ -152,6 +158,8 @@ namespace morecables
                     
                     if (!_shEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
                     if (!_scEnabled.Value && srcCable.CableType is Cable.Type.heavy) continue;
+                    
+                    if (srcCable.CableType is Cable.Type.heavy && HarmonyGameVersionPatch.CurrentVersion >= Version.Parse("0.2.6003.26330")) continue;
                     
                     int cableType = (int)srcCable.CableType;
                     string type = "";
