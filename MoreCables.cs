@@ -94,7 +94,12 @@ namespace morecables
             private static List<GameObject> copies = new List<GameObject>();
             private static T CopyPrefab<T>(T srcPrefab, string prefabName, MultiConstructor toolItem) where T : Thing
             {
-                var prefab = Object.Instantiate(srcPrefab);
+                var prefab = WorldManager.Instance.SourcePrefabs.Select(p => p as T).FirstOrDefault(p => p?.PrefabName == prefabName);
+                if (prefab)
+                {
+                    return prefab;
+                }
+                prefab = Object.Instantiate(srcPrefab);
                 copies.Add(prefab.gameObject);
 
                 prefab.PrefabName = prefabName;
@@ -154,13 +159,13 @@ namespace morecables
                         case Cable.Type.heavy:
                             if (_heavyVoltage.Value >= 0) srcCable.MaxVoltage = _heavyVoltage.Value;
                             break;
+                        default:
+                            continue;
                     }
                     Debug.Log($"Cable( Name: {srcCable.name}, Prefab: {srcCable.PrefabName}, Voltage: {srcCable.MaxVoltage}, Type: {(int) srcCable.CableType}) updated");
                     
                     if (!_shEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
                     if (!_scEnabled.Value && srcCable.CableType is Cable.Type.heavy) continue;
-                    
-                    if (srcCable.CableType != Cable.Type.heavy && HarmonyGameVersionPatch.CurrentVersion >= Version.Parse("0.2.6003.26330")) continue;
                     
                     int cableType = (int)srcCable.CableType;
                     string type = "";
