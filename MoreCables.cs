@@ -237,16 +237,15 @@ namespace morecables
                     copy.SetActive(false);
                 }
             }
-            [HarmonyPatch(typeof(WorldManager), "LoadDataFiles"), HarmonyPrefix]
+            [HarmonyPatch(typeof(WorldManager), "LoadDataFiles"), HarmonyPostfix]
             [HarmonyGameVersionPatch("0.2.0.0", "0.2.6002.26321")]
-            private static bool WorldManager_LoadDataFiles_Prefix()
+            private static void WorldManager_LoadDataFiles_Postfix()
             {
                 ElectronicsPrinter.RecipeComparable.AddRecipe(new WorldManager.RecipeData
                 {
                     PrefabName = "ItemCableCoilSuperHeavy",
                     Recipe = new Recipe {Time = 5f, Energy = 1000, Electrum = 0.5},
                 }, new ModAbout {Name = "MoreCables"});
-                return true;
             }
         }
     }
