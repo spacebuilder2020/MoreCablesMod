@@ -52,7 +52,7 @@ namespace morecables
         public class Patches
         {
             [HarmonyPatch(typeof(Cable), nameof(Cable.OnImGuiDraw)), HarmonyTranspiler]
-            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6003.26330")]
+            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6002.26321")]
             private static IEnumerable<CodeInstruction> Cable_OnImGuiDraw_Transpiler(IEnumerable<CodeInstruction> instructions)
             {
                 List<CodeInstruction> codes = new List<CodeInstruction>();
@@ -238,7 +238,7 @@ namespace morecables
                 }
             }
             [HarmonyPatch(typeof(WorldManager), "LoadDataFiles"), HarmonyPrefix]
-            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6003.26330")]
+            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6002.26321")]
             private static bool WorldManager_LoadDataFiles_Prefix()
             {
                 ElectronicsPrinter.RecipeComparable.AddRecipe(new WorldManager.RecipeData
