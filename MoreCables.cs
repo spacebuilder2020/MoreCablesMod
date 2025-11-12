@@ -159,7 +159,7 @@ namespace morecables
                     if (!_shEnabled.Value && srcCable.CableType is Cable.Type.normal) continue;
                     if (!_scEnabled.Value && srcCable.CableType is Cable.Type.heavy) continue;
                     
-                    if (srcCable.CableType is Cable.Type.heavy && HarmonyGameVersionPatch.CurrentVersion >= Version.Parse("0.2.6003.26330")) continue;
+                    if (srcCable.CableType >= Cable.Type.heavy && HarmonyGameVersionPatch.CurrentVersion >= Version.Parse("0.2.6003.26330")) continue;
                     
                     int cableType = (int)srcCable.CableType;
                     string type = "";
