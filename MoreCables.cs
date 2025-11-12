@@ -52,7 +52,7 @@ namespace morecables
         public class Patches
         {
             [HarmonyPatch(typeof(Cable), nameof(Cable.OnImGuiDraw)), HarmonyTranspiler]
-            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6003.26330 ")]
+            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6003.26330")]
             private static IEnumerable<CodeInstruction> Cable_OnImGuiDraw_Transpiler(IEnumerable<CodeInstruction> instructions)
             {
                 List<CodeInstruction> codes = new List<CodeInstruction>();
@@ -83,6 +83,23 @@ namespace morecables
                         codes.Add(new CodeInstruction(OpCodes.Beq_S, beq));
                         
                         codes.Add(newobj);
+                    }
+                    
+                    codes.Add(instruction);
+                }
+                
+                return codes.AsEnumerable();
+            }
+            [HarmonyPatch(typeof(Cable), nameof(Cable.OnImGuiDraw)), HarmonyTranspiler]
+            [HarmonyGameVersionPatch("0.2.6003.26330", "0.2.9999.99999")]
+            private static IEnumerable<CodeInstruction> Cable_OnImGuiDraw_Transpiler2(IEnumerable<CodeInstruction> instructions)
+            {
+                List<CodeInstruction> codes = new List<CodeInstruction>();
+                foreach (var instruction in instructions)
+                {
+                    if (instruction.opcode == OpCodes.Ble_Un && codes[codes.Count - 1].opcode == OpCodes.Ldc_I4_1)
+                    {
+                        codes[codes.Count - 1].opcode = OpCodes.Ldc_I4_2;
                     }
                     
                     codes.Add(instruction);
