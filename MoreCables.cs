@@ -223,7 +223,7 @@ namespace morecables
                 {
                     PrefabName = "ItemCableCoilSuperHeavy",
                     Recipe = new Recipe {Time = 5f, Energy = 1000, Electrum = 0.5},
-                }, new ModAbout {Author = "Spacebuilder2020", IsValid = true, Name = "MoreCables", Version = "0.7", WorkshopHandle = 3555588082});
+                }, new ModAbout {Name = "MoreCables"});
                 return true;
             }
         }
