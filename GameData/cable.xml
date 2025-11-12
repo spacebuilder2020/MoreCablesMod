@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GameData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <ElectronicsPrinterRecipes>
-        <RecipeData>
-            <PrefabName>ItemCableCoilSuperHeavy</PrefabName>
-            <Recipe>
-                <Time>5</Time>
-                <Energy>1000</Energy>
-                <Electrum>.5</Electrum>
-            </Recipe>
-        </RecipeData>
+    <ElectronicsPrinterRecipes>        
         <RecipeData>
             <PrefabName>ItemCableCoilSuperConductor</PrefabName>
             <Recipe>

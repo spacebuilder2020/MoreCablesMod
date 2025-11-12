@@ -10,6 +10,7 @@ using Assets.Scripts.Util;
 using BepInEx.Configuration;
 using HarmonyLib;
 using LaunchPadBooster.Patching;
+using Reagents;
 using StationeersMods.Interface;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -213,6 +214,17 @@ namespace morecables
                 {
                     copy.SetActive(false);
                 }
+            }
+            [HarmonyPatch(typeof(WorldManager), "LoadDataFiles"), HarmonyPrefix]
+            [HarmonyGameVersionPatch("0.2.0.0", "0.2.6003.26330")]
+            private static bool WorldManager_LoadDataFiles_Prefix()
+            {
+                ElectronicsPrinter.RecipeComparable.AddRecipe(new WorldManager.RecipeData
+                {
+                    PrefabName = "ItemCableCoilSuperHeavy",
+                    Recipe = new Recipe {Time = 5f, Energy = 1000, Electrum = 0.5},
+                }, new ModAbout {Author = "Spacebuilder2020", IsValid = true, Name = "MoreCables", Version = "0.7", WorkshopHandle = 3555588082});
+                return true;
             }
         }
     }
