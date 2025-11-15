@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -111,11 +112,11 @@ namespace morecables
             private static List<GameObject> copies = new List<GameObject>();
             private static T CopyPrefab<T>(T srcPrefab, string prefabName, MultiConstructor toolItem) where T : Thing
             {
-                var prefab = WorldManager.Instance.SourcePrefabs.Select(p => p as T).FirstOrDefault(p => p?.PrefabName == prefabName);
+                var /*prefab = WorldManager.Instance.SourcePrefabs.Select(p => p as T).FirstOrDefault(p => p?.PrefabName == prefabName);
                 if (prefab)
                 {
                     return prefab;
-                }
+                }*/
                 prefab = Object.Instantiate(srcPrefab);
                 copies.Add(prefab.gameObject);
 
@@ -157,6 +158,10 @@ namespace morecables
                 var items = new MultiMergeConstructor[2];
                 var cables = WorldManager.Instance.SourcePrefabs.Select(thing => thing as Cable).Where(thing => thing).ToList();
 
+                bool betaVer = HarmonyGameVersionPatch.CurrentVersion >= Version.Parse("0.2.6003.26330");
+                
+                var superHeavyItem = betaVer ? WorldManager.Instance.SourcePrefabs.Select(p => p as MultiMergeConstructor).FirstOrDefault(p => p?.PrefabName == "ItemCableCoilSuperHeavy") : null;
+                
                 if (!_shEnabled.Value)
                 {
                     ConsoleWindow.PrintAction("Warning: Super Heavy Cables are disabled and will be removed from worlds if loaded!");
@@ -203,11 +208,17 @@ namespace morecables
                     {
                         items[cableType] = (MultiMergeConstructor) CopyPrefab(srcCable.BuildStates[0].Tool.ToolEntry, cableType == 1
                             ? "ItemCableCoilSuperConductor"
-                            : "ItemCableCoilSuperHeavy", null);
+                            : $"ItemCableCoilSuperHeavy{(betaVer ? "Deprecated" :"")}", null);
                     }
                     
                     var cable = CopyPrefab(srcCable,$"StructureCable{type}{(cableType == 1 ? "SC" : "SH")}{(num >= '0' && num <= '9' ? num.ToString() : "")}", items[cableType]);
-                    
+                    if (betaVer)
+                    {
+                        cable.BuildStates[0].Tool.EntryQuantity2 = cable.BuildStates[0].Tool.EntryQuantity;
+                        cable.BuildStates[0].Tool.EntryQuantity = 0;
+                        cable.BuildStates[0].Tool.ToolEntry2 = superHeavyItem;
+                    }
+
                     switch (cable.CableType)
                     {
                         case Cable.Type.normal:
@@ -241,11 +252,29 @@ namespace morecables
             [HarmonyGameVersionPatch("0.2.0.0", "0.2.6002.26321")]
             private static void WorldManager_LoadDataFiles_Postfix()
             {
+                
                 ElectronicsPrinter.RecipeComparable.AddRecipe(new WorldManager.RecipeData
                 {
                     PrefabName = "ItemCableCoilSuperHeavy",
                     Recipe = new Recipe {Time = 5f, Energy = 1000, Electrum = 0.5},
                 }, new ModAbout {Name = "MoreCables"});
+            }
+
+            [HarmonyPatch(typeof(Localization.LanguageFolder), nameof(Localization.LanguageFolder.LoadAll)), HarmonyPrefix]
+            private static void Localization_LanguageFolder_LoadAll_Prefix(Localization.LanguageFolder __instance)
+            {
+                if (__instance.Code != LanguageCode.EN) return;
+                
+                bool betaVer = HarmonyGameVersionPatch.CurrentVersion >= Version.Parse("0.2.6003.26330");
+                
+                __instance.LanguagePages[0].Things.Add(new Localization.RecordThing
+                {
+                    Key = $"ItemCableCoilSuperHeavy{(betaVer ? "Deprecated" :"")}",
+                    Value = "Cable Coil (Super Heavy)",
+                    ThingDescription =
+                        "Use super heavy cable coil for power systems with extreme draws. Unlike {THING:ItemCableCoilHeavy}, which can only safely conduct 100kW, super heavy cables can transmit up to 500kW." +
+                        (betaVer ? "\nWarning: This item is now deprecated and not craftable. Placing cables with this item will not consume the item.  This is intentional and is done so when dismantling the item, it will spawn the vanilla version instead!" : "")
+                });
             }
         }
     }

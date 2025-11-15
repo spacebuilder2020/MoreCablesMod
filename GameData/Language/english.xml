@@ -5,11 +5,6 @@
     <Font>font_english</Font>
     <Things>
         <RecordThing>
-            <Key>ItemCableCoilSuperHeavy</Key>
-            <Value>Cable Coil (Super Heavy)</Value>
-            <Description>Use super heavy cable coil for power systems with extreme draws. Unlike {THING:ItemCableCoilHeavy}, which can only safely conduct 100kW, super heavy cables can transmit up to 500kW.</Description>
-        </RecordThing>
-        <RecordThing>
             <Key>StructureCableCornerSH</Key>
             <Value>Super Heavy Cable (Corner)</Value>
         </RecordThing>
