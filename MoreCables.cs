@@ -112,12 +112,7 @@ namespace morecables
             private static List<GameObject> copies = new List<GameObject>();
             private static T CopyPrefab<T>(T srcPrefab, string prefabName, MultiConstructor toolItem) where T : Thing
             {
-                var /*prefab = WorldManager.Instance.SourcePrefabs.Select(p => p as T).FirstOrDefault(p => p?.PrefabName == prefabName);
-                if (prefab)
-                {
-                    return prefab;
-                }*/
-                prefab = Object.Instantiate(srcPrefab);
+                var prefab = Object.Instantiate(srcPrefab);
                 copies.Add(prefab.gameObject);
 
                 prefab.PrefabName = prefabName;
